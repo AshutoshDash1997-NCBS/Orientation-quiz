@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Host-pathogen interaction lab</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .spin-wheel-link {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cell Biology and Epigenetics Quiz</h1>
+
+    <form id="quizForm">
+        <div class="question">
+            <p>1. During an experiment, researchers observed the uptake of a mycobacterial pathogen by macrophages. They infected 100 macrophages and found that 30 of them successfully internalized the pathogen. If the probability of pathogen uptake follows a binomial distribution, what is the probability that exactly 20 out of the next 50 macrophages will internalize the pathogen?</p>
+            <label><input type="radio" name="q1" value="A"> 0.0418</label><br>
+            <label><input type="radio" name="q1" value="B"> 0.0820</label><br>
+            <label><input type="radio" name="q1" value="C"> 0.1590</label><br>
+            <label><input type="radio" name="q1" value="D"> 0.2028</label><br>
+        </div>
+
+        <div class="question">
+            <p>2. In a population of cells, researchers are studying the expression of a gene regulated by DNA methylation. They observe that the gene is expressed in 70% of the cells and silenced in the remaining 30%. If they randomly sample 5 cells, what is the probability that exactly 3 of these cells express the gene?</p>
+            <label><input type="radio" name="q2" value="A"> 0.1323</label><br>
+            <label><input type="radio" name="q2" value="B"> 0.3087</label><br>
+            <label><input type="radio" name="q2" value="C"> 0.3602</label><br>
+            <label><input type="radio" name="q2" value="D"> 0.4477</label><br>
+        </div>
+
+        <button type="button" onclick="checkAnswers()">Submit</button>
+    </form>
+
+    <p id="result"></p>
+    <a id="spinWheelLink" class="spin-wheel-link" href="spinwheel.html">Proceed to Spin the Wheel of Gifts</a>
+
+    <script>
+        function checkAnswers() {
+            const correctAnswers = {
+                q1: "B",
+                q2: "B"
+            };
+
+            let form = document.getElementById('quizForm');
+            let result = document.getElementById('result');
+            let spinWheelLink = document.getElementById('spinWheelLink');
+            let correct = true;
+
+            for (let question in correctAnswers) {
+                let selected = form[question].value;
+                if (selected !== correctAnswers[question]) {
+                    correct = false;
+                    break;
+                }
+            }
+
+            if (correct) {
+                result.textContent = "All answers are correct! Proceed to spin the wheel.";
+                result.className = "correct";
+                spinWheelLink.style.display = "block";
+            } else {
+                result.textContent = "Some answers are incorrect. The quiz will now close.";
+                result.className = "incorrect";
+                spinWheelLink.style.display = "none";
+                setTimeout(() => {
+                    window.close();
+                }, 3000);
+            }
+        }
+    </script>
+
+</body>
+</html>

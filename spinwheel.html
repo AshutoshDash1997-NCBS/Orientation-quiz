@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spin the Wheel of Gifts</title>
+    <style>
+        /* Basic styles for the spin wheel page */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .wheel-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 10px solid #333;
+            overflow: hidden;
+        }
+        .wheel {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                #f00 0% 16.66%,
+                #0f0 16.66% 33.32%,
+                #00f 33.32% 49.98%,
+                #ff0 49.98% 66.64%,
+                #0ff 66.64% 83.3%,
+                #f0f 83.3% 100%
+            );
+        }
+        .pointer {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 20px solid #000;
+            transform: translateX(-50%);
+        }
+        .gift-list {
+            margin-top: 20px;
+        }
+        .sector-label {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-origin: 100% 100%;
+            font-size: 12px;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Spin the Wheel of Gifts</h1>
+    <div class="wheel-container">
+        <div class="wheel" id="wheel">
+            <div class="sector-label" style="transform: rotate(15deg);">Kit-kat</div>
+            <div class="sector-label" style="transform: rotate(75deg);">Pen</div>
+            <div class="sector-label" style="transform: rotate(135deg);">Notebook</div>
+            <div class="sector-label" style="transform: rotate(195deg);">A novel</div>
+            <div class="sector-label" style="transform: rotate(255deg);">Cookies</div>
+            <div class="sector-label" style="transform: rotate(315deg);">Sticky note with marker</div>
+        </div>
+        <div class="pointer"></div>
+    </div>
+    <button onclick="spinWheel()">Spin</button>
+
+    <div class="gift-list">
+        <p>Gift Choices:</p>
+        <ul>
+            <li>Kit-kat</li>
+            <li>Pen</li>
+            <li>Notebook</li>
+            <li>A novel</li>
+            <li>Cookies</li>
+            <li>Sticky note with marker</li>
+        </ul>
+    </div>
+
+    <script>
+        function spinWheel() {
+            const wheel = document.getElementById('wheel');
+            const minDegree = 360; // Ensuring at least one full rotation
+            const maxDegree = 1080; // Ensuring a maximum of three full rotations
+            const safeZone = 60; // Degree size of one gift choice (360 / 6)
+            const novelStart = 180; // Starting degree of "a novel" section
+            const novelEnd = 240; // Ending degree of "a novel" section
+            let randomDegree;
+
+            do {
+                randomDegree = Math.floor(Math.random() * (maxDegree - minDegree + 1)) + minDegree;
+                const finalPosition = (randomDegree + 90) % 360; // Plus 90 to align pointer to top
+                if (finalPosition < novelStart || finalPosition >= novelEnd) {
+                    break;
+                }
+            } while (true);
+
+            wheel.style.transition = 'transform 4s ease-out';
+            wheel.style.transform = `rotate(${randomDegree}deg)`;
+        }
+    </script>
+
+</body>
+</html>
